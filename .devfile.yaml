@@ -1,0 +1,17 @@
+schemaVersion: 2.2.0
+attributes:
+  controller.devfile.io/storage-type: per-workspace
+metadata:
+  name: podman-dev
+components:
+- name: podman
+  attributes:
+    pod-overrides: {"metadata": {"annotations": {"io.kubernetes.cri-o.Devices":"/dev/fuse","io.openshift.podman-fuse":""}}}
+  container: 
+    image: quay.io/cgruver0/che/podman-fuse:latest
+    # image: image-registry.openshift-image-registry.svc:5000/podman-build/podman-fuse:latest
+    memoryLimit: 6Gi
+    mountSources: true
+- volume:
+    size: 4Gi
+  name: projects
