@@ -5,9 +5,9 @@ ARG WORK_DIR="/projects"
 
 ENV HOME=${USER_HOME_DIR}
 ENV BUILDAH_ISOLATION=chroot
+COPY --chown=0:0 entrypoint.sh /
 
 # Note: compat-openssl11 & libbrotli are needed for che-code (Che build of VS Code)
-
 RUN microdnf --disableplugin=subscription-manager install -y openssl compat-openssl11 libbrotli git tar which shadow-utils bash zsh wget jq podman buildah skopeo; \
     microdnf update -y ; \
     microdnf clean all ; \
@@ -24,4 +24,5 @@ RUN microdnf --disableplugin=subscription-manager install -y openssl compat-open
 
 USER 10001
 WORKDIR ${WORK_DIR}
+ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "tail", "-f", "/dev/null" ]
