@@ -20,6 +20,7 @@ RUN microdnf --disableplugin=subscription-manager install -y openssl compat-open
     setcap cap_setuid+ep /usr/bin/newuidmap ; \
     setcap cap_setgid+ep /usr/bin/newgidmap ; \
     touch /etc/subgid /etc/subuid ; \
+    chmod +x /entrypoint.sh ; \
     chmod -R g=u /etc/passwd /etc/group /etc/subuid /etc/subgid /home ${WORK_DIR}
 
 USER 10001
