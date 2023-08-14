@@ -20,6 +20,9 @@ RUN microdnf --disableplugin=subscription-manager install -y openssl compat-open
     setcap cap_setuid+ep /usr/bin/newuidmap ; \
     setcap cap_setgid+ep /usr/bin/newgidmap ; \
     touch /etc/subgid /etc/subuid ; \
+    mkdir -p ${HOME}/.config/containers ; \
+    mkdir ${HOME}/proc ; \
+    (echo "[containers]";echo "netns=\"host\"";echo "volumes=[";echo "  \"${HOME}/proc:/proc:rw\"";echo "]") > ${HOME}/.config/containers/containers.conf ; \
     chmod +x /entrypoint.sh ; \
     chmod -R g=u /etc/passwd /etc/group /etc/subuid /etc/subgid /home ${WORK_DIR}
 
